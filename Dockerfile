@@ -29,8 +29,9 @@ RUN python -m pip install --upgrade pip setuptools wheel build && \
 # Copy the rest of the app
 COPY . /app
 
-# Expose port used by Uvicorn/ASGI
+# Expose a default port (for docs/dev). Render provides $PORT at runtime.
 EXPOSE 8000
 
-# Default command - run with uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Default command - use PORT env var if present (fallback to 8000).
+# Use sh -c so environment variable expansion works in the CMD.
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
