@@ -14,7 +14,13 @@ RUN apt-get update && \
       libopenjp2-7-dev \
       libfreetype6-dev \
       liblcms2-dev \
-      libwebp-dev && \
+      libwebp-dev \
+      # Libraries required by OpenCV (prevents libGL.so.1 missing errors)
+      libgl1 \
+      libglib2.0-0 \
+      libsm6 \
+      libxrender1 \
+      libxext6 && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
