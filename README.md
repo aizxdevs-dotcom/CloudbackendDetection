@@ -117,3 +117,35 @@ CloudDW/
 - Images are temporarily stored during processing and automatically cleaned up
 - Weather data includes current conditions and 5-day forecasts
 - All endpoints include proper error handling and validation
+
+## Deploying to Render
+
+If you deploy this project to Render, use the following build script to ensure packaging tools are up-to-date and dependencies install correctly (this upgrades pip/setuptools/wheel so Pillow and other binary wheels are preferred over source builds):
+
+1. Add the following as the Build Command in the Render service settings, or use the `render-build.sh` script included in this repo:
+
+```bash
+./render-build.sh
+```
+
+2. The `render-build.sh` script runs:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+# Upgrade pip/setuptools/wheel/build to avoid PEP517 build issues
+python -m pip install --upgrade pip setuptools wheel build
+# Install requirements
+python -m pip install -r requirements.txt
+```
+
+3. Ensure Render uses Python 3.12 for this project (the repo contains `runtime.txt` set to `python-3.12.3`). Render may default to a different Python; set the runtime in the Render dashboard to match `runtime.txt` so prebuilt wheels for Pillow are used.
+
+If you still hit build failures on Render, temporarily set a verbose install command to capture the failing package:
+
+```bash
+python -m pip install --upgrade pip setuptools wheel build
+python -m pip -v install -r requirements.txt
+```
+
+This will show whether `pip` downloads wheels or attempts source builds (which usually require additional OS-level libraries).
