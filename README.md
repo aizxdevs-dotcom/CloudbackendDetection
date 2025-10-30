@@ -149,3 +149,17 @@ python -m pip -v install -r requirements.txt
 ```
 
 This will show whether `pip` downloads wheels or attempts source builds (which usually require additional OS-level libraries).
+
+## Docker (optional, reproducible deploy)
+
+If you prefer to deploy with Docker (recommended when you need precise OS-level dependencies), a `Dockerfile` is included which builds using Python 3.12 and installs the common native libraries Pillow might need. To build and run locally:
+
+```bash
+# Build the image
+docker build -t cloudbackenddetection:latest .
+
+# Run the container (maps port 8000)
+docker run --rm -p 8000:8000 cloudbackenddetection:latest
+```
+
+On Render you can switch the service to "Docker" deploy and it will build the image using the repository `Dockerfile`. This solves build-time issues by providing the necessary OS packages inside the image.
