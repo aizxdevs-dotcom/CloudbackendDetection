@@ -1,0 +1,27 @@
+{
+  "location": "Bongao, Tawi-Tawi, Philippines",
+  "latitude": 6.819,
+  "longitude": 119.77,
+  "days": [
+    {
+      "date": "2025-10-28",
+      "temp_max": 29.4,
+      "temp_min": 26.5,
+      "precipitation_sum": 2.4,
+      "weathercode": 55,
+      "weather_label": "Dense drizzle",
+      "weather_icon": "🌧️",
+      "weather_icon_key": "drizzle"
+    },
+    {
+      "date": "2025-10-29",
+      "temp_max": 28.7,
+      "temp_min": 25.8,
+      "precipitation_sum": 14.6,
+      "weathercode": 63,
+      "weather_label": "Moderate rain",
+      "weather_icon": "🌧️",
+      "weather_icon_key": "rain"
+    }
+  ]
+}

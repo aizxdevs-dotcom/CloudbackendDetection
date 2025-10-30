@@ -1,0 +1,119 @@
+# Cloud Detection & Weather API
+
+A FastAPI backend that combines cloud detection using Roboflow's machine learning model with weather data from OpenWeatherMap.
+
+## Features
+
+- **Cloud Detection**: Upload images to detect cloud types using a trained Roboflow model
+- **Weather Data**: Get current weather and forecasts for any location
+- **Combined Analysis**: Analyze both cloud patterns and weather conditions together
+- **RESTful API**: Easy-to-use endpoints with comprehensive documentation
+
+## Setup
+
+### 1. Create and activate virtual environment
+```bash
+cd CloudDW
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Configure environment variables
+Copy `.env` file and add your OpenWeatherMap API key:
+```bash
+cp .env .env.local
+# Edit .env.local and replace 'your_openweather_api_key_here' with your actual API key
+```
+
+Get your free OpenWeatherMap API key from: https://openweathermap.org/api
+
+### 4. Run the application
+```bash
+python main.py
+```
+
+The API will be available at: http://localhost:8000
+
+## API Endpoints
+
+### Health Check
+- `GET /` - Check if the API is running
+
+### Cloud Detection
+- `POST /detect-clouds` - Upload an image to detect cloud types
+  - Body: Form data with image file
+  - Returns: Cloud detection results with bounding boxes and confidence scores
+
+### Weather Data
+- `GET /weather?city={city}&country={country}` - Get current weather
+- `GET /weather/forecast?city={city}&country={country}&days={1-5}` - Get weather forecast
+
+### Combined Analysis
+- `POST /analyze` - Analyze both clouds and weather
+  - Body: Form data with image file
+  - Query params: city, country (optional)
+  - Returns: Both cloud detection and weather data
+
+## API Documentation
+
+When the server is running, visit:
+- Interactive API docs: http://localhost:8000/docs
+- Alternative docs: http://localhost:8000/redoc
+
+## Example Usage
+
+### Upload image for cloud detection
+```bash
+curl -X POST "http://localhost:8000/detect-clouds" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@path/to/your/image.jpg"
+```
+
+### Get weather data
+```bash
+curl "http://localhost:8000/weather?city=London&country=UK"
+```
+
+### Combined analysis
+```bash
+curl -X POST "http://localhost:8000/analyze?city=London&country=UK" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@path/to/your/image.jpg"
+```
+
+## Project Structure
+
+```
+CloudDW/
+├── main.py                 # FastAPI application entry point
+├── config.py              # Configuration settings
+├── requirements.txt       # Python dependencies
+├── .env                   # Environment variables template
+├── services/
+│   ├── __init__.py
+│   ├── roboflow_service.py    # Cloud detection service
+│   └── weather_service.py     # Weather data service
+└── venv/                  # Virtual environment
+```
+
+## Technologies Used
+
+- **FastAPI**: Modern, fast web framework for building APIs
+- **Roboflow**: Machine learning platform for computer vision
+- **OpenWeatherMap**: Weather data API
+- **Pillow**: Python imaging library
+- **aiohttp**: Async HTTP client for weather API calls
+
+## Notes
+
+- The Roboflow model is pre-configured for cloud type detection
+- Images are temporarily stored during processing and automatically cleaned up
+- Weather data includes current conditions and 5-day forecasts
+- All endpoints include proper error handling and validation
