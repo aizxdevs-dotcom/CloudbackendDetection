@@ -27,4 +27,6 @@ APP_VERSION = "1.0.0"
 APP_DESCRIPTION = "FastAPI backend for cloud detection using Roboflow and weather data from OpenWeatherMap"
  
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+# Default FRONTEND_URL should point to the deployed frontend. It can be
+# overridden via the FRONTEND_URL environment variable (used in Render).
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://cloud-d-weather.vercel.app")
