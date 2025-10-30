@@ -34,4 +34,6 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/cloudbackenddetection:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/cloudbackenddetection:latest
+            ghcr.io/${{ github.repository_owner }}/cloudbackenddetection:${{ github.sha }}
